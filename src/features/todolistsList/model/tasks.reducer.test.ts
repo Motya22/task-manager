@@ -1,7 +1,7 @@
 import { TaskPriorities, TaskStatuses } from "common/enums"
-import { ActionForTests } from "../../common/types"
-import { tasksReducer, TasksStateType, tasksThunks } from "./tasksSlice"
-import { todolistsThunks } from "./todolistsSlice"
+import { ActionForTests } from "common/types"
+import { tasksReducer, TasksStateType, tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { todolistsThunks } from "features/todolistsList/model/todolistsSlice"
 
 let startState: TasksStateType = {}
 beforeEach(() => {

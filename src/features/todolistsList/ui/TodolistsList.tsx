@@ -5,10 +5,10 @@ import { useAppDispatch } from "common/hooks"
 import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
-import { selectIsLoggedIn } from "../auth/model/authSlice"
-import { selectTasks, tasksThunks } from "./tasksSlice"
-import { Todolist } from "./Todolist/Todolist"
-import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from "./todolistsSlice"
+import { selectIsLoggedIn } from "features/auth/model/authSlice"
+import { selectTasks, tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
+import { FilterValuesType, selectTodolists, todolistsActions, todolistsThunks } from "features/todolistsList/model/todolistsSlice"
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)

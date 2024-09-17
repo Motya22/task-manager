@@ -1,13 +1,13 @@
 import { v1 } from "uuid"
 import { RequestStatusType } from "app/appSlice"
-import { TodolistType } from "./todolistsApi"
 import {
   FilterValuesType,
   TodolistDomainType,
   todolistsActions,
   todolistsReducer,
   todolistsThunks,
-} from "./todolistsSlice"
+} from "features/todolistsList/model/todolistsSlice"
+import { TodolistType } from "features/todolistsList/api/todolistsApi.types"
 
 let todolistId1: string
 let todolistId2: string

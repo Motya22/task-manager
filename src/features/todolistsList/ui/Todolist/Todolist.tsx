@@ -4,10 +4,10 @@ import { AddItemForm, EditableSpan } from "common/components"
 import { TaskStatuses } from "common/enums"
 import { useAppDispatch } from "common/hooks"
 import React, { useCallback, useEffect } from "react"
-import { tasksThunks } from "../tasksSlice"
-import { TaskType } from "../todolistsApi"
-import { FilterValuesType, TodolistDomainType } from "../todolistsSlice"
-import { Task } from "./Task/Task"
+import { tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { FilterValuesType, TodolistDomainType } from "features/todolistsList/model/todolistsSlice"
+import { Task } from "features/todolistsList/ui/Todolist/Task/Task"
+import { TaskType } from "features/todolistsList/api/tasksApi.types"
 
 type PropsType = {
   todolist: TodolistDomainType

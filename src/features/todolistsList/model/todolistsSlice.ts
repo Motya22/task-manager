@@ -3,7 +3,8 @@ import { RequestStatusType } from "app/appSlice"
 import { clearTasksAndTodolists } from "common/actions"
 import { ResultCode } from "common/enums"
 import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils"
-import { todolistsApi, TodolistType, UpdateTodolistTitleArgType } from "./todolistsApi"
+import { todolistsApi } from "features/todolistsList/api/todolistsApi"
+import { TodolistType, UpdateTodolistTitleArgType } from "features/todolistsList/api/todolistsApi.types"
 
 const slice = createSlice({
   name: "todolists",
@@ -20,7 +21,7 @@ const slice = createSlice({
       if (todo) {
         todo.entityStatus = action.payload.entityStatus
       }
-    },
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -31,7 +32,7 @@ const slice = createSlice({
         const newTodolist: TodolistDomainType = {
           ...action.payload.todolist,
           filter: "all",
-          entityStatus: "idle",
+          entityStatus: "idle"
         }
         state.unshift(newTodolist)
       })
@@ -50,8 +51,8 @@ const slice = createSlice({
       })
   },
   selectors: {
-    selectTodolists: (state) => state,
-  },
+    selectTodolists: (state) => state
+  }
 })
 
 const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
@@ -61,7 +62,7 @@ const fetchTodolists = createAppAsyncThunk<{ todolists: TodolistType[] }, void>(
       const res = await todolistsApi.getTodolists()
       return { todolists: res.data }
     })
-  },
+  }
 )
 
 const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
@@ -77,7 +78,7 @@ const addTodolist = createAppAsyncThunk<{ todolist: TodolistType }, string>(
         return rejectWithValue(null)
       }
     })
-  },
+  }
 )
 
 const removeTodolist = createAppAsyncThunk<{ id: string }, string>(`${slice.name}/removeTodolist`, (id, thunkAPI) => {
@@ -107,7 +108,7 @@ const changeTodolistTitle = createAppAsyncThunk<UpdateTodolistTitleArgType, Upda
         return rejectWithValue(null)
       }
     })
-  },
+  }
 )
 
 export const todolistsReducer = slice.reducer
