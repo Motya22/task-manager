@@ -10,7 +10,6 @@ import { useAppDispatch } from "common/hooks"
 type TaskPropsType = {
   task: TaskType
   todolistId: string
-  changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
@@ -36,7 +35,11 @@ export const Task = React.memo((props: TaskPropsType) => {
 
   const onTitleChangeHandler = useCallback(
     (newValue: string) => {
-      props.changeTaskTitle(props.task.id, newValue, props.todolistId)
+      dispatch(tasksThunks.updateTask({
+        taskId: props.task.id,
+        domainModel: { title: newValue },
+        todolistId: props.todolistId
+      }))
     },
     [props.task.id, props.todolistId]
   )
