@@ -6,41 +6,43 @@ import { TaskStatuses } from "common/enums"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
 import { tasksThunks } from "features/todolistsList/model/tasksSlice"
 import { useAppDispatch } from "common/hooks"
+import s from "./Task.module.css"
 
-type TaskPropsType = {
+type Props = {
   task: TaskType
-  todolistId: string
 }
 
-export const Task = (props: TaskPropsType) => {
+export const Task = ({ task }: Props) => {
+  const { id, todoListId, title, status } = task
   const dispatch = useAppDispatch()
 
-  const onClickHandler = () => dispatch(tasksThunks.removeTask({ taskId: props.task.id, todolistId: props.todolistId }))
+  const removeTaskHandler = () => dispatch(tasksThunks.removeTask({ taskId: id, todolistId: todoListId }))
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newIsDoneValue = e.currentTarget.checked
+  const changeTaskStatusHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const status = e.currentTarget.checked ? TaskStatuses.Completed : TaskStatuses.New
 
     dispatch(tasksThunks.updateTask({
-      taskId: props.task.id,
-      domainModel: { status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New },
-      todolistId: props.todolistId
+      taskId: id,
+      domainModel: { status },
+      todolistId: todoListId
     }))
   }
 
-  const onTitleChangeHandler = (newValue: string) => {
+  const changeTaskTitleHandler = (title: string) => {
     dispatch(tasksThunks.updateTask({
-      taskId: props.task.id,
-      domainModel: { title: newValue },
-      todolistId: props.todolistId
+      taskId: id,
+      domainModel: { title },
+      todolistId: todoListId
     }))
   }
 
+  let isTaskCompleted = status === TaskStatuses.Completed
   return (
-    <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
-      <Checkbox checked={props.task.status === TaskStatuses.Completed} color="primary" onChange={onChangeHandler} />
+    <div key={id} className={isTaskCompleted ? s.isDone : ""}>
+      <Checkbox checked={isTaskCompleted} color="primary" onChange={changeTaskStatusHandler} />
 
-      <EditableSpan value={props.task.title} onChange={onTitleChangeHandler} />
-      <IconButton onClick={onClickHandler}>
+      <EditableSpan value={title} onChange={changeTaskTitleHandler} />
+      <IconButton onClick={removeTaskHandler}>
         <Delete />
       </IconButton>
     </div>
