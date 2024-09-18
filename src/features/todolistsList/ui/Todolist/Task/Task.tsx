@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useCallback } from "react"
+import React, { ChangeEvent } from "react"
 import { Checkbox, IconButton } from "@mui/material"
 import { Delete } from "@mui/icons-material"
 import { EditableSpan } from "common/components"
@@ -12,37 +12,28 @@ type TaskPropsType = {
   todolistId: string
 }
 
-export const Task = React.memo((props: TaskPropsType) => {
+export const Task = (props: TaskPropsType) => {
   const dispatch = useAppDispatch()
 
-  const onClickHandler = useCallback(
-    () => dispatch(tasksThunks.removeTask({ taskId: props.task.id, todolistId: props.todolistId })),
-    [props.task.id, props.todolistId]
-  )
+  const onClickHandler = () => dispatch(tasksThunks.removeTask({ taskId: props.task.id, todolistId: props.todolistId }))
 
-  const onChangeHandler = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      let newIsDoneValue = e.currentTarget.checked
+  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    let newIsDoneValue = e.currentTarget.checked
 
-      dispatch(tasksThunks.updateTask({
-        taskId: props.task.id,
-        domainModel: { status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New },
-        todolistId: props.todolistId
-      }))
-    },
-    [props.task.id, props.todolistId]
-  )
+    dispatch(tasksThunks.updateTask({
+      taskId: props.task.id,
+      domainModel: { status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New },
+      todolistId: props.todolistId
+    }))
+  }
 
-  const onTitleChangeHandler = useCallback(
-    (newValue: string) => {
-      dispatch(tasksThunks.updateTask({
-        taskId: props.task.id,
-        domainModel: { title: newValue },
-        todolistId: props.todolistId
-      }))
-    },
-    [props.task.id, props.todolistId]
-  )
+  const onTitleChangeHandler = (newValue: string) => {
+    dispatch(tasksThunks.updateTask({
+      taskId: props.task.id,
+      domainModel: { title: newValue },
+      todolistId: props.todolistId
+    }))
+  }
 
   return (
     <div key={props.task.id} className={props.task.status === TaskStatuses.Completed ? "is-done" : ""}>
@@ -54,4 +45,4 @@ export const Task = React.memo((props: TaskPropsType) => {
       </IconButton>
     </div>
   )
-})
+}
