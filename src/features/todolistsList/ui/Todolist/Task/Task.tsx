@@ -4,38 +4,41 @@ import { Delete } from "@mui/icons-material"
 import { EditableSpan } from "common/components"
 import { TaskStatuses } from "common/enums"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
+import { tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { useAppDispatch } from "common/hooks"
 
 type TaskPropsType = {
   task: TaskType
   todolistId: string
-  changeTaskStatus: (id: string, status: TaskStatuses, todolistId: string) => void
   changeTaskTitle: (taskId: string, newTitle: string, todolistId: string) => void
-  removeTask: (taskId: string, todolistId: string) => void
 }
 
 export const Task = React.memo((props: TaskPropsType) => {
+  const dispatch = useAppDispatch()
+
   const onClickHandler = useCallback(
-    () => props.removeTask(props.task.id, props.todolistId),
-    [props.task.id, props.todolistId],
+    () => dispatch(tasksThunks.removeTask({ taskId: props.task.id, todolistId: props.todolistId })),
+    [props.task.id, props.todolistId]
   )
 
   const onChangeHandler = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       let newIsDoneValue = e.currentTarget.checked
-      props.changeTaskStatus(
-        props.task.id,
-        newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New,
-        props.todolistId,
-      )
+
+      dispatch(tasksThunks.updateTask({
+        taskId: props.task.id,
+        domainModel: { status: newIsDoneValue ? TaskStatuses.Completed : TaskStatuses.New },
+        todolistId: props.todolistId
+      }))
     },
-    [props.task.id, props.todolistId],
+    [props.task.id, props.todolistId]
   )
 
   const onTitleChangeHandler = useCallback(
     (newValue: string) => {
       props.changeTaskTitle(props.task.id, newValue, props.todolistId)
     },
-    [props.task.id, props.todolistId],
+    [props.task.id, props.todolistId]
   )
 
   return (
