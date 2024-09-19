@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const Todolist = function({ todolist, tasks }: Props) {
-  const { id, filter, entityStatus } = todolist
+  const { id, entityStatus } = todolist
   const dispatch = useAppDispatch()
 
   useEffect(() => {
