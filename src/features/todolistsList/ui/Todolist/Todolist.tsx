@@ -1,12 +1,12 @@
-import { Button } from "@mui/material"
 import { AddItemForm } from "common/components"
 import { useAppDispatch } from "common/hooks"
 import React, { useEffect } from "react"
 import { tasksThunks } from "features/todolistsList/model/tasksSlice"
-import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolistsList/model/todolistsSlice"
+import { TodolistDomainType } from "features/todolistsList/model/todolistsSlice"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
 import { TodolistTitle } from "features/todolistsList/ui/Todolist/TodolistTitle/TodolistTitle"
 import { Tasks } from "features/todolistsList/ui/Todolist/Tasks/Tasks"
+import { TasksFilterButtons } from "features/todolistsList/ui/Todolist/TasksFilterButtons/TasksFilterButtons"
 
 type Props = {
   todolist: TodolistDomainType
@@ -14,7 +14,7 @@ type Props = {
 }
 
 export const Todolist = function({ todolist, tasks }: Props) {
-  const { id, filter, title, entityStatus } = todolist
+  const { id, filter, entityStatus } = todolist
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -25,11 +25,6 @@ export const Todolist = function({ todolist, tasks }: Props) {
     dispatch(tasksThunks.addTask({ title, todolistId: id }))
   }
 
-  const changeTodolistFilterHandler = (filter: FilterValuesType) => dispatch(todolistsActions.changeTodolistFilter({
-    id,
-    filter
-  }))
-
   return (
     <div>
       <TodolistTitle todolist={todolist} />
@@ -38,27 +33,7 @@ export const Todolist = function({ todolist, tasks }: Props) {
         <Tasks todolist={todolist} tasks={tasks} />
       </div>
       <div style={{ paddingTop: "10px" }}>
-        <Button
-          variant={filter === "all" ? "outlined" : "text"}
-          onClick={() => changeTodolistFilterHandler("all")}
-          color={"inherit"}
-        >
-          All
-        </Button>
-        <Button
-          variant={filter === "active" ? "outlined" : "text"}
-          onClick={() => changeTodolistFilterHandler("active")}
-          color={"primary"}
-        >
-          Active
-        </Button>
-        <Button
-          variant={filter === "completed" ? "outlined" : "text"}
-          onClick={() => changeTodolistFilterHandler("completed")}
-          color={"secondary"}
-        >
-          Completed
-        </Button>
+        <TasksFilterButtons todolist={todolist} />
       </div>
     </div>
   )
