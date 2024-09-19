@@ -36,7 +36,8 @@ export const Task = ({ task }: Props) => {
     }))
   }
 
-  let isTaskCompleted = status === TaskStatuses.Completed
+  const isTaskCompleted = status === TaskStatuses.Completed
+
   return (
     <div key={id} className={isTaskCompleted ? s.isDone : ""}>
       <Checkbox checked={isTaskCompleted} color="primary" onChange={changeTaskStatusHandler} />
