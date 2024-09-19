@@ -1,13 +1,12 @@
 import { Button } from "@mui/material"
 import { AddItemForm } from "common/components"
-import { TaskStatuses } from "common/enums"
 import { useAppDispatch } from "common/hooks"
 import React, { useEffect } from "react"
 import { tasksThunks } from "features/todolistsList/model/tasksSlice"
 import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolistsList/model/todolistsSlice"
-import { Task } from "features/todolistsList/ui/Todolist/Task/Task"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
 import { TodolistTitle } from "features/todolistsList/ui/Todolist/TodolistTitle/TodolistTitle"
+import { Tasks } from "features/todolistsList/ui/Todolist/Tasks/Tasks"
 
 type Props = {
   todolist: TodolistDomainType
@@ -31,26 +30,12 @@ export const Todolist = function({ todolist, tasks }: Props) {
     filter
   }))
 
-  let tasksForTodolist = tasks
-
-  if (filter === "active") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New)
-  }
-  if (filter === "completed") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed)
-  }
-
   return (
     <div>
       <TodolistTitle todolist={todolist} />
       <AddItemForm addItem={addTask} disabled={entityStatus === "loading"} />
       <div>
-        {tasksForTodolist.map((t) => (
-          <Task
-            key={t.id}
-            task={t}
-          />
-        ))}
+        <Tasks todolist={todolist} tasks={tasks} />
       </div>
       <div style={{ paddingTop: "10px" }}>
         <Button

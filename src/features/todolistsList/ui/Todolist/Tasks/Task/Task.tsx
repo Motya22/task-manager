@@ -6,7 +6,7 @@ import { TaskStatuses } from "common/enums"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
 import { tasksThunks } from "features/todolistsList/model/tasksSlice"
 import { useAppDispatch } from "common/hooks"
-import s from "./Task.module.css"
+import s from "features/todolistsList/ui/Todolist/Tasks/Task/Task.module.css"
 
 type Props = {
   task: TaskType
