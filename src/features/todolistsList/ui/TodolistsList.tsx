@@ -5,14 +5,9 @@ import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { selectIsLoggedIn } from "features/auth/model/authSlice"
-import { selectTasks, tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { selectTasks } from "features/todolistsList/model/tasksSlice"
 import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
-import {
-  FilterValuesType,
-  selectTodolists,
-  todolistsActions,
-  todolistsThunks
-} from "features/todolistsList/model/todolistsSlice"
+import { selectTodolists, todolistsThunks } from "features/todolistsList/model/todolistsSlice"
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)
@@ -26,22 +21,6 @@ export const TodolistsList = () => {
       return
     }
     dispatch(todolistsThunks.fetchTodolists())
-  }, [])
-
-  const addTask = useCallback(function(title: string, todolistId: string) {
-    dispatch(tasksThunks.addTask({ title, todolistId }))
-  }, [])
-
-  const changeFilter = useCallback(function(filter: FilterValuesType, id: string) {
-    dispatch(todolistsActions.changeTodolistFilter({ id, filter }))
-  }, [])
-
-  const removeTodolist = useCallback(function(id: string) {
-    dispatch(todolistsThunks.removeTodolist(id))
-  }, [])
-
-  const changeTodolistTitle = useCallback(function(id: string, title: string) {
-    dispatch(todolistsThunks.changeTodolistTitle({ id, title }))
   }, [])
 
   const addTodolist = useCallback((title: string) => {
@@ -67,10 +46,6 @@ export const TodolistsList = () => {
                 <Todolist
                   todolist={tl}
                   tasks={allTodolistTasks}
-                  changeFilter={changeFilter}
-                  addTask={addTask}
-                  removeTodolist={removeTodolist}
-                  changeTodolistTitle={changeTodolistTitle}
                 />
               </Paper>
             </Grid>
