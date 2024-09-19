@@ -1,18 +1,13 @@
-import { Delete } from "@mui/icons-material"
-import { Button, IconButton } from "@mui/material"
-import { AddItemForm, EditableSpan } from "common/components"
+import { Button } from "@mui/material"
+import { AddItemForm } from "common/components"
 import { TaskStatuses } from "common/enums"
 import { useAppDispatch } from "common/hooks"
 import React, { useEffect } from "react"
 import { tasksThunks } from "features/todolistsList/model/tasksSlice"
-import {
-  FilterValuesType,
-  TodolistDomainType,
-  todolistsActions,
-  todolistsThunks
-} from "features/todolistsList/model/todolistsSlice"
+import { FilterValuesType, TodolistDomainType, todolistsActions } from "features/todolistsList/model/todolistsSlice"
 import { Task } from "features/todolistsList/ui/Todolist/Task/Task"
 import { TaskType } from "features/todolistsList/api/tasksApi.types"
+import { TodolistTitle } from "features/todolistsList/ui/Todolist/TodolistTitle/TodolistTitle"
 
 type Props = {
   todolist: TodolistDomainType
@@ -31,13 +26,6 @@ export const Todolist = function({ todolist, tasks }: Props) {
     dispatch(tasksThunks.addTask({ title, todolistId: id }))
   }
 
-  const removeTodolistHandler = () => dispatch(todolistsThunks.removeTodolist(id))
-
-  const changeTodolistTitleHandler = (title: string) => dispatch(todolistsThunks.changeTodolistTitle({
-    id,
-    title
-  }))
-
   const changeTodolistFilterHandler = (filter: FilterValuesType) => dispatch(todolistsActions.changeTodolistFilter({
     id,
     filter
@@ -54,12 +42,7 @@ export const Todolist = function({ todolist, tasks }: Props) {
 
   return (
     <div>
-      <h3>
-        <EditableSpan value={title} onChange={changeTodolistTitleHandler} />
-        <IconButton onClick={removeTodolistHandler} disabled={entityStatus === "loading"}>
-          <Delete />
-        </IconButton>
-      </h3>
+      <TodolistTitle todolist={todolist} />
       <AddItemForm addItem={addTask} disabled={entityStatus === "loading"} />
       <div>
         {tasksForTodolist.map((t) => (
