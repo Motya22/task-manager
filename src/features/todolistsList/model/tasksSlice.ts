@@ -1,9 +1,9 @@
-import { createSlice } from "@reduxjs/toolkit"
+import { createSelector, createSlice } from "@reduxjs/toolkit"
 import { appActions } from "app/appSlice"
 import { clearTasksAndTodolists } from "common/actions"
 import { ResultCode, TaskPriorities, TaskStatuses } from "common/enums"
 import { createAppAsyncThunk, handleServerAppError, thunkTryCatch } from "common/utils"
-import { todolistsThunks } from "features/todolistsList/model/todolistsSlice"
+import { FilterValuesType, todolistsThunks } from "features/todolistsList/model/todolistsSlice"
 import {
   AddTaskArgType,
   RemoveTaskArgType,
@@ -54,7 +54,24 @@ const slice = createSlice({
       })
   },
   selectors: {
-    selectTasks: (state) => state
+    selectTasks: (state) => state,
+    selectFilteredTasks: createSelector(
+      (state: TasksStateType) => state,
+      (state: TasksStateType, id: string) => id,
+      (state: TasksStateType, id: string, filter: FilterValuesType) => filter,
+      (state, id, filter) => {
+        const tasks = state[id]
+
+        if (filter === "active") {
+          return tasks.filter((t) => t.status === TaskStatuses.New)
+        }
+        if (filter === "completed") {
+          return tasks.filter((t) => t.status === TaskStatuses.Completed)
+        }
+
+        return tasks
+      }
+    )
   }
 })
 
@@ -134,7 +151,7 @@ const removeTask = createAppAsyncThunk<RemoveTaskArgType, RemoveTaskArgType>(
 
 export const tasksReducer = slice.reducer
 export const tasksThunks = { fetchTasks, addTask, updateTask, removeTask }
-export const { selectTasks } = slice.selectors
+export const { selectTasks, selectFilteredTasks } = slice.selectors
 export const tasksPath = slice.reducerPath
 
 // types

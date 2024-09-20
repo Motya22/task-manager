@@ -1,29 +1,26 @@
 import { Task } from "features/todolistsList/ui/Todolist/Tasks/Task/Task"
-import React from "react"
-import { TaskStatuses } from "common/enums"
+import React, { useEffect } from "react"
 import { TodolistDomainType } from "features/todolistsList/model/todolistsSlice"
-import { TaskType } from "features/todolistsList/api/tasksApi.types"
+import { selectFilteredTasks, tasksThunks } from "features/todolistsList/model/tasksSlice"
+import { useAppDispatch } from "common/hooks"
+import { useAppSelector } from "app/store"
 
 type Props = {
   todolist: TodolistDomainType
-  tasks: TaskType[]
 }
 
-export const Tasks = function({ todolist, tasks }: Props) {
-  const { filter } = todolist
+export const Tasks = function({ todolist }: Props) {
+  const { filter, id } = todolist
+  const tasks = useAppSelector((state) => selectFilteredTasks(state, id, filter))
+  const dispatch = useAppDispatch()
 
-  let tasksForTodolist = tasks
-
-  if (filter === "active") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.New)
-  }
-  if (filter === "completed") {
-    tasksForTodolist = tasks.filter((t) => t.status === TaskStatuses.Completed)
-  }
+  useEffect(() => {
+    dispatch(tasksThunks.fetchTasks(id))
+  }, [])
 
   return (
     <>
-      {tasksForTodolist.map((t) => (
+      {tasks.map((t) => (
         <Task
           key={t.id}
           task={t}
