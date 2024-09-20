@@ -11,7 +11,6 @@ import { selectTodolists, todolistsThunks } from "features/todolistsList/model/t
 
 export const TodolistsList = () => {
   const todolists = useSelector(selectTodolists)
-  const tasks = useSelector(selectTasks)
   const isLoggedIn = useSelector(selectIsLoggedIn)
 
   const dispatch = useAppDispatch()
