@@ -5,7 +5,6 @@ import React, { useCallback, useEffect } from "react"
 import { useSelector } from "react-redux"
 import { Navigate } from "react-router-dom"
 import { selectIsLoggedIn } from "features/auth/model/authSlice"
-import { selectTasks } from "features/todolistsList/model/tasksSlice"
 import { Todolist } from "features/todolistsList/ui/Todolist/Todolist"
 import { selectTodolists, todolistsThunks } from "features/todolistsList/model/todolistsSlice"
 
