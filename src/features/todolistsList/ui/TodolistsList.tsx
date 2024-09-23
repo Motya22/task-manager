@@ -22,7 +22,7 @@ export const TodolistsList = () => {
   }, [])
 
   const addTodolist = useCallback((title: string) => {
-    dispatch(todolistsThunks.addTodolist(title))
+    return dispatch(todolistsThunks.addTodolist(title))
   }, [])
 
   if (!isLoggedIn) {

@@ -16,7 +16,7 @@ export const Todolist = function({ todolist }: Props) {
   const dispatch = useAppDispatch()
 
   const addTask = (title: string) => {
-    dispatch(tasksThunks.addTask({ title, todolistId: id }))
+    return dispatch(tasksThunks.addTask({ title, todolistId: id }))
   }
 
   return (
