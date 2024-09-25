@@ -4,12 +4,12 @@ import { AddBox } from "@mui/icons-material"
 import { unwrapResult } from "@reduxjs/toolkit"
 import { BaseResponse } from "common/types"
 
-type AddItemFormPropsType = {
+type Props = {
   addItem: (title: string) => Promise<any>
   disabled?: boolean
 }
 
-export const AddItemForm = React.memo(function({ addItem, disabled = false }: AddItemFormPropsType) {
+export const AddItemForm = React.memo(function({ addItem, disabled = false }: Props) {
   let [title, setTitle] = useState("")
   let [error, setError] = useState<string | null>(null)
 
