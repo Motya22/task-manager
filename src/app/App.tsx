@@ -4,7 +4,7 @@ import { useSelector } from "react-redux"
 import { BrowserRouter } from "react-router-dom"
 import { CircularProgress } from "@mui/material"
 import { ErrorSnackbar, Header, Routing } from "common/components"
-import { authThunks } from "../features/auth/model/authSlice"
+import { authThunks } from "features/auth/model/authSlice"
 import { selectIsInitialized } from "./appSlice"
 
 function App() {
