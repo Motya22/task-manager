@@ -1,14 +1,11 @@
 import { useAppDispatch } from "common/hooks"
 import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import { CircularProgress, Container } from "@mui/material"
-import { ErrorSnackbar, Routing } from "common/components"
+import { BrowserRouter } from "react-router-dom"
+import { CircularProgress } from "@mui/material"
+import { ErrorSnackbar, Header, Routing } from "common/components"
 import { authThunks } from "../features/auth/model/authSlice"
-import { Login } from "../features/auth/ui/login/Login"
-import { TodolistsList } from "features/todolistsList/ui/TodolistsList"
 import { selectIsInitialized } from "./appSlice"
-import { Header } from "common/components"
 
 function App() {
   const isInitialized = useSelector(selectIsInitialized)
