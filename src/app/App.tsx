@@ -3,7 +3,7 @@ import React, { useEffect } from "react"
 import { useSelector } from "react-redux"
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import { CircularProgress, Container } from "@mui/material"
-import { ErrorSnackbar } from "common/components"
+import { ErrorSnackbar, Routing } from "common/components"
 import { authThunks } from "../features/auth/model/authSlice"
 import { Login } from "../features/auth/ui/login/Login"
 import { TodolistsList } from "features/todolistsList/ui/TodolistsList"
@@ -31,12 +31,7 @@ function App() {
       <div className="App">
         <ErrorSnackbar />
         <Header />
-        <Container fixed>
-          <Routes>
-            <Route path={"/"} element={<TodolistsList />} />
-            <Route path={"/login"} element={<Login />} />
-          </Routes>
-        </Container>
+        <Routing />
       </div>
     </BrowserRouter>
   )
