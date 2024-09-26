@@ -27,7 +27,6 @@ const slice = createSlice({
         state.status = "succeeded"
       })
       .addMatcher(isRejected, (state, action: any) => {
-        console.log("isRejected: ", action)
         state.status = "failed"
 
         if (action.payload) {
