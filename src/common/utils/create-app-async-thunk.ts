@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit"
 import { BaseResponse } from "common/types"
-import { AppDispatch, AppRootStateType } from "../../app/store"
+import { AppDispatch, AppRootStateType } from "app/store"
 
 /**
 Эта функция предназначена для того, чтобы избавиться от дублирования кода по созданию типов в санке
