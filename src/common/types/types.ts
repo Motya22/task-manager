@@ -10,4 +10,8 @@ export type BaseResponse<D = {}> = {
   fieldsErrors: FieldErrorType[]
 }
 
+export type CaptchaResponse = {
+  url: string
+}
+
 export type ActionForTests<T extends (...args: any) => any> = Omit<ReturnType<T>, "meta">

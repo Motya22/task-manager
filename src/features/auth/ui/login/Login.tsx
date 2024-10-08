@@ -6,7 +6,7 @@ import { useLogin } from "features/auth/lib/useLogin"
 
 
 export const Login = () => {
-  const {formik, isLoggedIn} = useLogin()
+  const { formik, isLoggedIn, captchaUrl } = useLogin()
 
   if (isLoggedIn) {
     return <Navigate to={"/"} />
@@ -37,6 +37,13 @@ export const Login = () => {
                 label={"Remember me"}
                 control={<Checkbox {...formik.getFieldProps("rememberMe")} checked={formik.values.rememberMe} />}
               />
+              {captchaUrl && (
+                <>
+                  <img src={captchaUrl} alt="captcha" />
+                  <TextField label="Captcha" margin="normal" {...formik.getFieldProps("captcha")} />
+                  {formik.touched.captcha && formik.errors.captcha && <p className={s.error}>{formik.errors.captcha}</p>}
+                </>
+              )}
               <Button
                 type={"submit"}
                 variant={"contained"}

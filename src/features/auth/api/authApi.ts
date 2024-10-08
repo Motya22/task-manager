@@ -1,5 +1,5 @@
 import { instance } from "common/instance/instance"
-import { BaseResponse } from "common/types/types"
+import { BaseResponse, CaptchaResponse } from "common/types/types"
 
 export const authAPI = {
   login(data: LoginParamsType) {
@@ -11,6 +11,9 @@ export const authAPI = {
   me() {
     return instance.get<BaseResponse<{ id: number; email: string; login: string }>>("auth/me")
   },
+  getCaptchaUrl() {
+    return instance.get<CaptchaResponse>("security/get-captcha-url")
+  }
 }
 
 export type LoginParamsType = {
